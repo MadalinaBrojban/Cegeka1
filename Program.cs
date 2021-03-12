@@ -1,63 +1,62 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace app1
 {
     public class Car
     {
         public string model;
-        private static int instances = 0;
+        public static string color = "black";
 
-        public Car()
-        {
-            instances++;
-        }
-        ~Car()
-        {
-            instances--;
-        }
-        public static int GetActiveInstances()
-        {
-            return instances;
-        }
-        public Car(string model)
-        {
+        public Car(string model) {
             this.model = model;
         }
 
-        public static int carCounter;
-
-        public static int AddCar()
-        {
-            return ++carCounter;
-        }
-        public class Package {
-            enum packageType { Entry, Premium};
-            enum engine {mechanical, pneumatic };
-            enum transmission { automotive, manual};
-
-        }
     }
+    public class Package {
+        public string packageType;
+        public double enginePower;
+        public string transmission;
+
+        public Package(string packageType, double enginePower, string transmission) {
+            this.packageType = packageType;
+            this.enginePower = enginePower;
+            this.transmission = transmission;
+        }
+     
+    }
+    
     class MainClass
     {
         static void Main()
         {
-           
-            Car c1 = new Car();
-            c1.model = "Mercedes";
+
+            Car c1 = new Car("Mercedes");
+            Car c2 = new Car("WW");
+            Package p1 = new Package("Entry", 1.9, "manual transmission");
+            Package p2 = new Package("Premium", 2.7, "automotive transmission");
+            List<Car> cars = new List<Car>();
+            cars.Add(c1);
+            cars.Add(c2);
+            int count = 0;
+            for (int i = 0; i < cars.Count; i++)
+            {
+                Console.WriteLine("Model "+i+": "+ cars[i].model);
+                count++;
+            }
+            Console.WriteLine("The amount of cars manufactured: "+count);
 
             Console.Write("Enter a new car model: ");
-            string model = Console.ReadLine();
-            Console.Write("How many car models: ");
+            string newModel = Console.ReadLine();
+            Console.Write("How many car models do you want: ");
             string n = Console.ReadLine();
-            int count = Car.GetActiveInstances();
-            Car.carCounter = Int32.Parse(n);
-            int total = count+Int32.Parse(n);
-            Car.AddCar();
+            int total = count + Int32.Parse(n);
 
             // Display the new information.
-            Console.WriteLine($"desired car model: {model}");
-            Console.WriteLine($"amount of cars manufactured: {total}");
-            Console.WriteLine($"models created by company:{c1.model}");
+            Console.WriteLine("Desired car model: " +newModel);
+            Console.WriteLine("The amount of cars manufactured: " +total);
+            Console.WriteLine("Color of all cars: "+Car.color);
+
 
 
         }
